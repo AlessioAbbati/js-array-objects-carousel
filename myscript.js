@@ -96,13 +96,15 @@ for (let i = 0; i < listThumbs.length; i++) {
     )
 }
 
+setInterval(() => {
+    listHighlighted[activeIndex].classList.remove('active');
+    listThumbs[activeIndex].classList.remove('active');
 
+    activeIndex++;
+    if (activeIndex >= listHighlighted.length) {
+        activeIndex = 0;
+    }
 
-/*
-btnNext ---> al click fai function() {...}
-btnPrev ---> al click fai function() {...}
-thumb0 ----> al click fai function() {...}
-thumb1 ----> al click fai function() {...}
-thumb3 ----> al click fai function() {...}
-thumb4 ----> al click fai function() {...}
-*/
+    listHighlighted[activeIndex].classList.add('active');
+    listThumbs[activeIndex].classList.add('active');
+}, 3000);

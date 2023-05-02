@@ -27,19 +27,18 @@ const containerThumbs = document.querySelector('.thumbs');
 
 for (let i = 0; i < images.length; i++) {
     containerHighlighted.innerHTML +=
-     `<div>
+        `<div class="img_container ${i == 0 ? 'active' : ''}">
         <img src="${images[i].image}" alt="" class="${i == 0 ? 'active' : ''}">
-        <div class="${i == 0 ? 'active' : ''}">${images[i].title}</div>
-        <div class="${i == 0 ? 'active' : ''}">${images[i].text}</div>
-     </div>`;
-     
-    containerThumbs.innerHTML += 
-    `<img src="${images[i].image}" alt="" class="${i == 0 ? 'active' : ''}">`;
+        <h2 class="title">${images[i].title}</h2>
+        <p class="text">${images[i].text}</p>
+    </div>`;
+    containerThumbs.innerHTML +=
+        `<img src="${images[i].image}" alt="" class="${i == 0 ? 'active' : ''}">`;
 }
 
 
-// selezionimo le immagini nell'html
-const listHighlighted = document.querySelectorAll('.highlighted img');
+// selezioniamo le immagini nell'html
+const listHighlighted = document.querySelectorAll('.highlighted .img_container');
 // selezioniamo le miniature
 const listThumbs = document.querySelectorAll('.thumbs img');
 // selezioniamo i bottoni

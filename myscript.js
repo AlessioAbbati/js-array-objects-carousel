@@ -42,6 +42,8 @@ const listHighlighted = document.querySelectorAll('.highlighted .img_container')
 // selezioniamo le miniature
 const listThumbs = document.querySelectorAll('.thumbs img');
 // selezioniamo i bottoni
+const btnControl = document.querySelector('.btn-control');
+const btnInvert = document.querySelector('.btn-invert');
 const btnPrev = document.querySelector('.btn-prev');
 const btnNext = document.querySelector('.btn-next');
 
@@ -49,38 +51,11 @@ const btnNext = document.querySelector('.btn-next');
 // definito una variabile che rappresenta lo stato attuale del carosello
 // cioe' l'indice dell'immagine attiva
 let activeIndex = 0;
+let slideDirection = -1;
 
-btnNext.addEventListener('click',
-    function () {
-        // dall'immagine attiva tolgo la classe active
-        listHighlighted[activeIndex].classList.remove('active');
-        listThumbs[activeIndex].classList.remove('active');
-        // settiamo il nuovo valore di active index
-        activeIndex++;
-        if (activeIndex >= listHighlighted.length) {
-            activeIndex = 0;
-        }
-        // alla nuova immagine attiva aggiungiamo la classe active
-        listHighlighted[activeIndex].classList.add('active');
-        listThumbs[activeIndex].classList.add('active');
-    }
-);
-
-btnPrev.addEventListener('click',
-    function () {
-        // dall'immagine attiva tolgo la classe active
-        listHighlighted[activeIndex].classList.remove('active');
-        listThumbs[activeIndex].classList.remove('active');
-        // settiamo il nuovo valore di active index
-        activeIndex--;
-        if (activeIndex < 0) {
-            activeIndex = listHighlighted.length - 1;
-        }
-        // alla nuova immagine attiva aggiungiamo la classe active
-        listHighlighted[activeIndex].classList.add('active');
-        listThumbs[activeIndex].classList.add('active');
-    }
-);
+btnInvert.addEventListener('click', invertSlideDirection);
+btnNext.addEventListener('click', nextSlide);
+btnPrev.addEventListener('click', prevSlide);
 
 // ciclo per aggiungere gli event listeners alle miniature
 for (let i = 0; i < listThumbs.length; i++) {
@@ -96,7 +71,9 @@ for (let i = 0; i < listThumbs.length; i++) {
     )
 }
 
-setInterval(() => {
+setInterval(() => slideDirection == 1 ? nextSlide() : prevSlide(), 2000);
+
+function nextSlide() {
     listHighlighted[activeIndex].classList.remove('active');
     listThumbs[activeIndex].classList.remove('active');
 
@@ -107,4 +84,22 @@ setInterval(() => {
 
     listHighlighted[activeIndex].classList.add('active');
     listThumbs[activeIndex].classList.add('active');
-}, 3000);
+};
+
+function prevSlide() {
+    // dall'immagine attiva tolgo la classe active
+    listHighlighted[activeIndex].classList.remove('active');
+    listThumbs[activeIndex].classList.remove('active');
+    // settiamo il nuovo valore di active index
+    activeIndex--;
+    if (activeIndex < 0) {
+        activeIndex = listHighlighted.length - 1;
+    }
+    // alla nuova immagine attiva aggiungiamo la classe active
+    listHighlighted[activeIndex].classList.add('active');
+    listThumbs[activeIndex].classList.add('active');
+}
+
+function invertSlideDirection() {
+    slideDirection *= -1;
+}

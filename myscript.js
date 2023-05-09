@@ -52,8 +52,10 @@ const btnNext = document.querySelector('.btn-next');
 // cioe' l'indice dell'immagine attiva
 let activeIndex = 0;
 let slideDirection = -1;
+let isAutorun = true;
 
 btnInvert.addEventListener('click', invertSlideDirection);
+btnControl.addEventListener('click', toggleAutorun);
 btnNext.addEventListener('click', nextSlide);
 btnPrev.addEventListener('click', prevSlide);
 
@@ -71,7 +73,7 @@ for (let i = 0; i < listThumbs.length; i++) {
     )
 }
 
-setInterval(() => slideDirection == 1 ? nextSlide() : prevSlide(), 2000);
+const idAutorun = setInterval(() => slideDirection == 1 ? nextSlide() : prevSlide(), 2000);
 
 function nextSlide() {
     listHighlighted[activeIndex].classList.remove('active');
@@ -102,4 +104,19 @@ function prevSlide() {
 
 function invertSlideDirection() {
     slideDirection *= -1;
+}
+
+function autorun() {
+    if (isAutorun) {
+        idAutorun = setInterval(() => slideDirection == 1 ? nextSlide() : prevSlide(), 2000);
+        btnControl.innerHTML = 'STOP';
+    } else {
+        clearInterval(idAutorun);
+        btnControl.innerHTML = 'START';
+    }
+} 
+
+function toggleAutorun() {
+    isAutorun = !isAutorun;
+    autorun();
 }
